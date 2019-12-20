@@ -41,8 +41,68 @@ class Airplane {
 */
 
 class Person {
+  constructor(name, age) {
+    this.name = name,
+      this.age = age,
+      this.stomach = []
+  }
+  eat(someFood) {
+    if (this.stomach.length < 10) {
+      this.stomach.push(someFood)
+    }
+  }
+  poop() {
+    this.stomach = []
+  }
 
-}
+  toString() {
+    return `${this.name}, ${this.age}`
+  }
+
+}// This closes the Parent
+
+
+class Person1 extends Person {
+  constructor(attributes) {
+    super(attributes)
+    this.name = attributes.name
+    this.age = attributes.age
+  }
+
+} // This closes Person1 
+const person1 = new Person({
+  name: 'name',
+  age: 'age '
+})
+
+class Person2 extends Person1 {
+  constructor(attributes) {
+    super(attributes)
+    this.name = attributes.name
+    this.age = attributes.age
+  }
+}//This closes  Person2
+const person2 = new Person1({
+  name: 'name',
+  age: 'age'
+})
+
+class Person3 extends Person2 {
+  constructor(attributes) {
+    super(attributes)
+    this.name = attributes.name
+    this.age = attributes.age
+  }
+}// this closes person3
+
+const person3 = new Person2({
+  name: 'name',
+  age: 'age'
+})
+
+
+
+
 
 /*
   TASK 2
@@ -59,8 +119,59 @@ class Person {
 */
 
 class Car {
+  constructor(model, milesPerGallon) {
+    this.model = model,
+      this.milesPerGallon = milesPerGallon,
+      this.tank = 0,
+      this.odometer = 0
+  }
 
-}
+  fill(gallons) {
+    this.tank += gallons
+  }
+  drive(distance) {
+    var distanceToDrive = Math.min(this.milesPerGallon * this.tank, distance);
+    this.odometer += distanceToDrive;
+    this.tank -= distanceToDrive / this.milesPerGallon;
+    if (distanceToDrive < distance) {
+      return `I ran out of  fuel at  ${this.odometer}miles!`;
+    }
+  }
+}// this closes Car
+class Car1 extends Car {
+  constructor(attributes) {
+    super(attributes)
+    this.model = attributes.model,
+      this.milesPerGallon = attributes.model,
+      this.odometer = 0,
+      this.tank = attributes.tank
+  }
+}// this closes Car1
+
+const car1 = new Car({
+  model: 'model',
+  milesPerGallon: 'milesPerGallon',
+  odometer: 0,
+  tank: 'tank'
+})
+
+class Car2 extends Car1 {
+  constructor(attributes) {
+    super(attributes)
+    this.model = attributes.model,
+      this.milesPerGallon = attributes.milesPerGallon,
+      this.odometer = 0,
+      this.tank = 0
+  }
+}// this closes car2
+
+const car2 = new Car1({
+  model: 'model',
+  milesPerGallon: 'milesPerGallon',
+  odometer: 0,
+  tank: 0
+})
+
 
 /*
   TASK 3
@@ -75,8 +186,39 @@ class Car {
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
+  constructor(object) {
+    this.name = object.name,
+      this.age = object.age,
+      this.location = object.location
 
-}
+  }
+  speak() {
+    return `Hello my name is ${this.name}, I am from ${this.location}`
+  }
+}// this closes Lambdasian
+
+class Lambdasian1 extends Lambdasian {
+  constructor(object) {
+    super(object)
+
+    this.name = object.name,
+      this.age = object.age,
+      this.location = object.location
+
+  }
+  speak() {
+
+    return `Hello my name is ${this.name}, I am from ${this.location}`
+  }
+}// this close
+
+const lambDasian1 = new Lambdasian({
+  name: 'Adebola Adesina',
+  age: 37,
+  location: 'Los Angeles'
+
+})
+
 
 /*
   TASK 4
@@ -92,9 +234,45 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
+class Instructor extends Lambdasian1 {
+  constructor(object) {
+    super(object)
+    this.specialty = object.specialty,
+      this.favLanguage = object.favLanguage,
+      this.catchPhrase = object.catchPhrase,
+      this.name = object.name,
+      this.age = object.age,
+      this.location = object.location
+  }
+  demo(subject) {
 
-}
+    return `Today we are learning about ${subject}`
+  }
+  grade(student, subject) {
+    return `${student.name} receives a perfect score on ${subject}`
+  }
+  adjustGrade(student) {
+    let points = Math.round(Math.random() * 100);
+    if (student.grade >= 100) {
+      student.grade -= points;
+      return `${points} points are subtracted from ${student.name}'s grade. ${student.name}'s current grade is ${student.grade}`;
+    } else {
+      student.grade += points;
+      return `${points} points are added to ${student.name}'s grade.  ${student.name}'s current grade is ${student.grade}`;
+    }
+  }
+}// This closes Intructor
+
+// }// This closes Instructor
+
+const instructor = new Lambdasian1({
+  name: 'Adebola Adesina',
+  age: 37,
+  specialty: 'JS and Python',
+  favLanguage: 'Python',
+  catchPhrase: 'Always do your best',
+  location: 'Los Angeles'
+})
 
 /*
   TASK 5
@@ -111,9 +289,53 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
+class Student extends Instructor {
+  constructor(object) {
+    super(object)
+    this.name = object.name,
+      this.age = object.age,
+      this.location = object.location,
+      this.specialty = object.specialty,
+      this.favLanguage = object.favLanguage,
+      this.catchPhrase = object.catchPhrase,
+      this.className = object.className,
+      this.previousBackground = object.previousBackground,
+      this.favSubjects = object.favSubjects,
+      this.studentGrade = object.studentGrade
 
-}
+  }
+  listSubjects() {
+    return `Loving ${this.favSubjects.toString()}!`
+  }
+  PRAssignment(subject) {
+    return `${this.name}has submitted a PR for ${subject}`
+  }
+  sprintChallenge(subject) {
+    return `${this.name} has begun Sprint challenge on ${subject}`
+  }
+
+  graduate() {
+    if (this.studentGrade >= 70) {
+      return `${this.name} has graduated with a final grade of ${this.grade}!`;
+    } else {
+      let diff = 70 - this.studentGrade;
+      this.studentGrade += diff;
+      return `After more grading, ${diff} points were earned and ${this.name} has graduated with a final grade of ${this.studentGrade}!`;
+    }
+  }
+}//This closes Student
+// }// This closes Student
+const student = new Instructor({
+  name: 'Adebola Adesina',
+  age: 37,
+  location: 'Los Angeles',
+  specialty: 'web dev',
+  favLanguage: 'Python',
+  catchPhrase: 'Always do your best',
+  className: 'Web27',
+  previousBackGround: 'Technician',
+  favSubjects: ['JS', 'Python', 'CSS']
+})
 
 /*
   TASK 6
@@ -128,10 +350,43 @@ class Student {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
+class ProjectManager extends Student {
+  constructor(object) {
+    super(object)
+    this.name = object.name,
+      this.age = object.age,
+      this.location = object.location,
+      this.specialty = object.specialty,
+      this.favLanguage = object.favLanguage,
+      this.catchPhrase = object.catchPhrase,
+      this.className = object.className,
+      this.previousBackground = object.previousBackground
+    this.favSubjects = object.favSubjects,
+      this.gradClassName = object.gradClassName,
+      this.favInstructor = object.favInstructor
+  }
 
-}
+  standUp(channel) {
+    return `${this.name} announces to ${channel}, @ channel standy times! `
+  }
+  debugsCode(student, subject) {
+    return `${this.name} debugs ${student.name}'s code on ${subject}`
+  }
+}// This closes ProjectManager
 
+const myPjManager = new Student({
+  name: 'Adebola Adesina',
+  age: 37,
+  location: 'Los Angeles',
+  specialty: 'web dev',
+  favLanguage: 'Python',
+  catchPhrase: 'Always do your best',
+  className: 'Web27',
+  previousBackGround: 'Technician',
+  favSubjects: ['JS', 'Python', 'CSS'],
+  gradClassName: 'web27',
+  favInstructor: 'None yet'
+})
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
@@ -140,7 +395,6 @@ class ProjectManager {
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
-
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
