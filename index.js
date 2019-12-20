@@ -248,7 +248,7 @@ class Instructor extends Lambdasian1 {
 
     return `Today we are learning about ${subject}`
   }
-  grade({ student, subject }) {
+  grade(object, subject) {
 
     return `${student.name} receives a perfect score on ${subject}`
   }
@@ -282,17 +282,17 @@ class Student extends Instructor {
   constructor(object) {
     super(object)
     this.name = object.name,
-      this.age = object.name,
+      this.age = object.age,
       this.location = object.location,
       this.specialty = object.specialty,
       this.favLanguage = object.favLanguage,
       this.catchPhrase = object.catchPhrase,
       this.className = object.className,
-      this.previousBackground = object.technician,
-      this.favSubjects = ['JS', 'Python', 'CSS']
+      this.previousBackground = object.previousBackground
+    this.favSubjects = ['JS', 'Node', 'Redux']
   }
   listSubjects() {
-    return `Loving ${this.favSubjects}!`
+    return `Loving ${this.favSubjects.toString()}!`
   }
   PRAssignment(subject) {
     return `student.name ha submitted a PR for ${subject}`
@@ -327,9 +327,44 @@ const student = new Instructor({
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
+class ProjectManager extends Student {
+  constructor(object) {
+    super(object)
+    this.name = object.name,
+      this.age = object.age,
+      this.location = object.location,
+      this.specialty = object.specialty,
+      this.favLanguage = object.favLanguage,
+      this.catchPhrase = object.catchPhrase,
+      this.className = object.className,
+      this.previousBackground = object.previousBackground
+    this.favSubjects = ['JS', 'Node', 'Redux'],
+      this.gradClassName = object.gradClassName,
+      this.favInstructor = object.favInstructor
+  }
 
-}
+  standUp(channel) {
+    return `${name} announces to ${channel}, @ channel standy times! `
+  }
+  debugsCode(object, subject) {
+    return `{name} debugs {student.name}'s code on {subject}`
+  }
+}// This close ProjectManager
+
+const myPjManager = new Student({
+  name: 'Adebola Adesina',
+  age: 37,
+  location: 'Los Angeles',
+  specialty: 'web dev',
+  favLanguage: 'Python',
+  catchPhrase: 'Always do your best',
+  className: 'Web27',
+  previousBackGround: 'Technician',
+  favSubjects: ['JS', 'Python', 'CSS'],
+  gradClassName: 'web27',
+  favInstructor: 'None yet'
+})
+
 
 /*
   STRETCH PROBLEM (no tests!)
