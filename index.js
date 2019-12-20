@@ -248,11 +248,22 @@ class Instructor extends Lambdasian1 {
 
     return `Today we are learning about ${subject}`
   }
-  grade(object, subject) {
-
+  grade(student, subject) {
     return `${student.name} receives a perfect score on ${subject}`
   }
-}// This closes Instructor
+  adjustGrade(student) {
+    let points = Math.round(Math.random() * 100);
+    if (student.grade >= 100) {
+      student.grade -= points;
+      return `${points} points are subtracted from ${student.name}'s grade. ${student.name}'s current grade is ${student.grade}`;
+    } else {
+      student.grade += points;
+      return `${points} points are added to ${student.name}'s grade.  ${student.name}'s current grade is ${student.grade}`;
+    }
+  }
+}// This closes Intructor
+
+// }// This closes Instructor
 
 const instructor = new Lambdasian1({
   name: 'Adebola Adesina',
@@ -288,20 +299,32 @@ class Student extends Instructor {
       this.favLanguage = object.favLanguage,
       this.catchPhrase = object.catchPhrase,
       this.className = object.className,
-      this.previousBackground = object.previousBackground
-    this.favSubjects = ['JS', 'Node', 'Redux']
+      this.previousBackground = object.previousBackground,
+      this.favSubjects = object.favSubjects,
+      this.studentGrade = object.studentGrade
+
   }
   listSubjects() {
     return `Loving ${this.favSubjects.toString()}!`
   }
   PRAssignment(subject) {
-    return `student.name ha submitted a PR for ${subject}`
+    return `${this.name}has submitted a PR for ${subject}`
   }
   sprintChallenge(subject) {
-    return `student.name has begun Sprint challenge on ${subject}`
+    return `${this.name} has begun Sprint challenge on ${subject}`
   }
-}// This closes Student
 
+  graduate() {
+    if (this.studentGrade >= 70) {
+      return `${this.name} has graduated with a final grade of ${this.grade}!`;
+    } else {
+      let diff = 70 - this.studentGrade;
+      this.studentGrade += diff;
+      return `After more grading, ${diff} points were earned and ${this.name} has graduated with a final grade of ${this.studentGrade}!`;
+    }
+  }
+}//This closes Student
+// }// This closes Student
 const student = new Instructor({
   name: 'Adebola Adesina',
   age: 37,
@@ -338,18 +361,18 @@ class ProjectManager extends Student {
       this.catchPhrase = object.catchPhrase,
       this.className = object.className,
       this.previousBackground = object.previousBackground
-    this.favSubjects = ['JS', 'Node', 'Redux'],
+    this.favSubjects = object.favSubjects,
       this.gradClassName = object.gradClassName,
       this.favInstructor = object.favInstructor
   }
 
   standUp(channel) {
-    return `${name} announces to ${channel}, @ channel standy times! `
+    return `${this.name} announces to ${channel}, @ channel standy times! `
   }
-  debugsCode(object, subject) {
-    return `{name} debugs {student.name}'s code on {subject}`
+  debugsCode(student, subject) {
+    return `${this.name} debugs ${student.name}'s code on ${subject}`
   }
-}// This close ProjectManager
+}// This closes ProjectManager
 
 const myPjManager = new Student({
   name: 'Adebola Adesina',
@@ -364,8 +387,6 @@ const myPjManager = new Student({
   gradClassName: 'web27',
   favInstructor: 'None yet'
 })
-
-
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
@@ -374,7 +395,6 @@ const myPjManager = new Student({
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
-
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
